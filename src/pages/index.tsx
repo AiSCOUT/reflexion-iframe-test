@@ -35,8 +35,13 @@ const Home: NextPage = () => {
               >
                 <p className="m-auto">{displayTop ? "⬇️" : "⬆️"}</p>
               </div>
-              <div className="flex w-[1552px] rounded-3xl border-2 border-green-400 bg-white/10">
-                x
+              <div className="flex w-[1552px] rounded-2xl border-2 border-green-400 bg-white/10 p-[5px]">
+                <iframe
+                  className=""
+                  height={1928}
+                  width={1542}
+                  src="https://app.reflexion.us/"
+                ></iframe>
               </div>
               <div className="flex h-[260px] w-[260px] text-6xl"></div>
             </div>
