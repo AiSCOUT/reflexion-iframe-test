@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         />
         <meta
           httpEquiv="Content-Security-Policy"
-          content="script-src 'self' app.reflexion.us 'unsafe-eval' 'unsafe-inline' blob:; child-src app.reflexion.us blob:; worker-src blob:;font-src *"
+          content="script-src 'self' uastaging.reflexion.us 'unsafe-eval' 'unsafe-inline' blob:; child-src uastaging.reflexion.us blob:; worker-src blob:;font-src *"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
