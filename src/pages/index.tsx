@@ -31,7 +31,7 @@ const Home: NextPage = () => {
             <div
               className={`${
                 displayTop ? "mt-0" : "mt-[800px]"
-              } flex h-[1950px]`}
+              } flex h-[1938px]`}
             >
               <div
                 onClick={() => setDisplayTop((val) => !val)}
