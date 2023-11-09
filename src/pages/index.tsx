@@ -4,10 +4,27 @@ import Link from "next/link";
 
 import { trpc } from "../utils/trpc";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const useDisablePinchZoomEffect = () => {
+  useEffect(() => {
+    const disablePinchZoom = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener("touchmove", disablePinchZoom, {
+      passive: false,
+    });
+    return () => {
+      document.removeEventListener("touchmove", disablePinchZoom);
+    };
+  }, []);
+};
 
 const Home: NextPage = () => {
   const [displayTop, setDisplayTop] = useState(true);
+  useDisablePinchZoomEffect();
   return (
     <>
       <Head>
