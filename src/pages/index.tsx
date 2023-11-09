@@ -16,10 +16,10 @@ const Home: NextPage = () => {
           name="description"
           content="A page to be able to test reflexion in an iFrame"
         />
-        <meta
+        {/* <meta
           httpEquiv="Content-Security-Policy"
           content="script-src 'self' uastaging.reflexion.us 'unsafe-eval' 'unsafe-inline' blob:; child-src uastaging.reflexion.us blob:; worker-src blob:;font-src *"
-        />
+        /> */}
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="justify-top flex min-h-screen flex-col items-center bg-gradient-to-b from-[#000000] to-[#194329]">
