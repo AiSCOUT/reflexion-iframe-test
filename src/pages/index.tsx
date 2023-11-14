@@ -2,6 +2,7 @@ import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
+import type { RouterOutputs } from "../utils/trpc";
 import { trpc } from "../utils/trpc";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -24,6 +25,40 @@ const useDisablePinchZoomEffect = () => {
 
 const Home: NextPage = () => {
   const [displayTop, setDisplayTop] = useState(true);
+  const utils = trpc.useContext();
+
+  const getNewReflexionSession =
+    trpc.reflexion.createNewRandomSession.useMutation();
+
+  const [reflexionUserSession, setUserSession] = useState<
+    RouterOutputs["reflexion"]["createNewRandomSession"] | null
+  >(null);
+
+  const [sessionResult, setSessionResult] = useState<
+    RouterOutputs["reflexion"]["checkUserSession"] | null
+  >(null);
+
+  useEffect(() => {
+    getNewReflexionSession.mutateAsync().then((res) => {
+      setUserSession(res);
+    });
+  }, []);
+
+  // poll the endpoint every 2 seconds until we get success
+  useEffect(() => {
+    if (sessionResult !== null && sessionResult?.completed) return;
+    const interval = setInterval(() => {
+      utils.client.reflexion.checkUserSession
+        .query({
+          userSessionToken: reflexionUserSession?.userSessionToken || "",
+        })
+        .then((res) => {
+          setSessionResult(res);
+        });
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [reflexionUserSession]);
+
   useDisablePinchZoomEffect();
   return (
     <>
@@ -61,11 +96,17 @@ const Home: NextPage = () => {
                   className=""
                   height={1928}
                   width={1542}
-                  src="https://uastaging.reflexion.us/d/drills-minefield"
+                  src={`https://uastaging.reflexion.us?omitMobileCheck=true&userSession=${reflexionUserSession?.userSessionToken}`}
                 ></iframe>
               </div>
               <div className="flex h-[260px] w-[260px] text-6xl"></div>
             </div>
+          </div>
+          <div className="flex text-3xl text-white">
+            <pre>{JSON.stringify(reflexionUserSession, null, 2)}</pre>
+          </div>
+          <div className="flex text-3xl text-white">
+            <pre>{JSON.stringify(sessionResult, null, 2)}</pre>
           </div>
           <div className="align-self-end mb-32">
             <Image src="/logoP.png" alt="ai.io logo" width={324} height={140} />
