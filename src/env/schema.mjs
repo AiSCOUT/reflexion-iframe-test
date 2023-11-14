@@ -7,7 +7,13 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  /**
+   * Reflexion API Key
+   */
   REFLEXION_API_KEY: z.string(),
+  /**
+   * Base URL to use for the Reflexion API's
+   */
   REFLEXION_BASE_URL: z.string().url(),
 });
 
@@ -18,6 +24,10 @@ export const serverSchema = z.object({
  */
 export const clientSchema = z.object({
   // NEXT_PUBLIC_BAR: z.string(),
+  /**
+   * Base URL to use for the Reflexion iFrame
+   */
+  NEXT_PUBLIC_REFLEXION_IFRAME_BASE_URL: z.string().url(),
 });
 
 /**
@@ -28,4 +38,6 @@ export const clientSchema = z.object({
  */
 export const clientEnv = {
   // NEXT_PUBLIC_BAR: process.env.NEXT_PUBLIC_BAR,
+  NEXT_PUBLIC_REFLEXION_IFRAME_BASE_URL:
+    process.env.NEXT_PUBLIC_REFLEXION_IFRAME_BASE_URL,
 };

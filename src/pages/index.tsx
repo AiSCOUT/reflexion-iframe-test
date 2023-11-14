@@ -6,6 +6,7 @@ import type { RouterOutputs } from "../utils/trpc";
 import { trpc } from "../utils/trpc";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { env } from "../env/client.mjs";
 
 const useDisablePinchZoomEffect = () => {
   useEffect(() => {
@@ -108,7 +109,7 @@ const Home: NextPage = () => {
                         className=""
                         height={1928}
                         width={1542}
-                        src={`https://uastaging.reflexion.us?omitMobileCheck=true&userSession=${reflexionUserSession?.userSessionToken}`}
+                        src={`${env.NEXT_PUBLIC_REFLEXION_IFRAME_BASE_URL}?omitMobileCheck=true&userSession=${reflexionUserSession?.userSessionToken}`}
                       ></iframe>
                     )}
                 </div>
