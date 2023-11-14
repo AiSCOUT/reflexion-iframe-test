@@ -1,12 +1,12 @@
 import { string, z } from "zod";
-import { Axios } from "axios";
+import axios from "axios";
 
 import { router, publicProcedure } from "../trpc";
 import { env } from "../../../env/server.mjs";
-import { randUser, randPastDate } from "@ngneat/falso";
+import { randUser, randBetweenDate } from "@ngneat/falso";
 import { DateTime } from "luxon";
 
-const relfexionApi = new Axios({
+const relfexionApi = axios.create({
   baseURL: env.REFLEXION_BASE_URL,
   headers: {
     Authorization: `Bearer ${env.REFLEXION_API_KEY}`,
@@ -33,10 +33,13 @@ type userSessionTokenCheckResponse =
       }[];
     };
 
-export const exampleRouter = router({
-  createNewRandomReflexionSession: publicProcedure.mutation(async ({}) => {
+export const reflexionRouter = router({
+  createNewRandomSession: publicProcedure.mutation(async ({}) => {
     const randomUser = randUser();
-    const birthDate = randPastDate();
+    const birthDate = randBetweenDate({
+      from: DateTime.fromISO("1960-01-01").toJSDate(),
+      to: DateTime.fromISO("2004-01-01").toJSDate(),
+    });
 
     const userSessionResponse = await relfexionApi.post<UserSessionResponse>(
       "/org/usersession",
@@ -47,7 +50,9 @@ export const exampleRouter = router({
         showVideos: false,
         showProgressPage: false,
         showSpiderGraph: false,
-        surveyResponses: {},
+      },
+      {
+        withCredentials: true,
       }
     );
 
