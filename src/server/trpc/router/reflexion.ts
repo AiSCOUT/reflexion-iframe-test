@@ -50,6 +50,7 @@ export const reflexionRouter = router({
         showVideos: false,
         showProgressPage: false,
         showSpiderGraph: false,
+        showInstructions: false,
       },
       {
         withCredentials: true,
