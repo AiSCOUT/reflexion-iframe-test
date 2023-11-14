@@ -80,33 +80,51 @@ const Home: NextPage = () => {
             Cognitive Test
           </h1>
           <div className="flex min-w-full flex-grow flex-row items-start justify-center">
-            <div
-              className={`${
-                displayTop ? "mt-0" : "mt-[800px]"
-              } flex h-[1938px]`}
-            >
+            {sessionResult?.completed ? (
+              <div className="mt-[300px] flex w-[800px] flex-col rounded-3xl border-2 border-green-400 bg-white/10 p-8 text-center align-middle text-6xl text-white">
+                <p className="m-auto flex">✅</p>
+                <br />
+                <p className="m-auto w-[500px]">
+                  Test complete - Refresh to try again
+                </p>
+              </div>
+            ) : (
               <div
-                onClick={() => setDisplayTop((val) => !val)}
-                className="flex h-[260px] w-[260px] self-end rounded-3xl border-2 border-green-400 bg-white/10 text-center align-middle text-9xl text-white"
+                className={`${
+                  displayTop ? "mt-0" : "mt-[800px]"
+                } flex h-[1938px]`}
               >
-                <p className="m-auto">{displayTop ? "⬇️" : "⬆️"}</p>
+                <div
+                  onClick={() => setDisplayTop((val) => !val)}
+                  className="flex h-[260px] w-[260px] self-end rounded-3xl border-2 border-green-400 bg-white/10 text-center align-middle text-9xl text-white"
+                >
+                  <p className="m-auto">{displayTop ? "⬇️" : "⬆️"}</p>
+                </div>
+                <div className="flex w-[1552px] rounded-2xl border-2 border-green-400 bg-white/10 p-[5px]">
+                  <iframe
+                    className=""
+                    height={1928}
+                    width={1542}
+                    src={`https://uastaging.reflexion.us?omitMobileCheck=true&userSession=${reflexionUserSession?.userSessionToken}`}
+                  ></iframe>
+                </div>
+                <div className="flex h-[260px] w-[260px] text-6xl"></div>
               </div>
-              <div className="flex w-[1552px] rounded-2xl border-2 border-green-400 bg-white/10 p-[5px]">
-                <iframe
-                  className=""
-                  height={1928}
-                  width={1542}
-                  src={`https://uastaging.reflexion.us?omitMobileCheck=true&userSession=${reflexionUserSession?.userSessionToken}`}
-                ></iframe>
+            )}
+          </div>
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col text-3xl text-white">
+              <div className="flex text-5xl font-bold text-white">
+                User Session:
               </div>
-              <div className="flex h-[260px] w-[260px] text-6xl"></div>
+              <pre>{JSON.stringify(reflexionUserSession, null, 2)}</pre>
             </div>
-          </div>
-          <div className="flex text-3xl text-white">
-            <pre>{JSON.stringify(reflexionUserSession, null, 2)}</pre>
-          </div>
-          <div className="flex text-3xl text-white">
-            <pre>{JSON.stringify(sessionResult, null, 2)}</pre>
+            <div className="flex flex-col  text-3xl text-white">
+              <div className="flex text-5xl font-bold text-white">
+                Test Result:
+              </div>
+              <pre>{JSON.stringify(sessionResult, null, 2)}</pre>
+            </div>
           </div>
           <div className="align-self-end mb-32">
             <Image src="/logoP.png" alt="ai.io logo" width={324} height={140} />
