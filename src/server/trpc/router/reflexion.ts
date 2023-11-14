@@ -51,9 +51,6 @@ export const reflexionRouter = router({
         showProgressPage: false,
         showSpiderGraph: false,
         showInstructions: false,
-      },
-      {
-        withCredentials: true,
       }
     );
 
