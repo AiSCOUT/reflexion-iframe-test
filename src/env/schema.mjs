@@ -7,6 +7,8 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  REFLEXION_API_KEY: z.string(),
+  REFLEXION_BASE_URL: z.string().url(),
 });
 
 /**
