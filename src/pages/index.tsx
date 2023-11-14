@@ -24,6 +24,7 @@ const useDisablePinchZoomEffect = () => {
 };
 
 const Home: NextPage = () => {
+  useDisablePinchZoomEffect();
   const [displayTop, setDisplayTop] = useState(true);
   const utils = trpc.useContext();
 
@@ -38,13 +39,14 @@ const Home: NextPage = () => {
     RouterOutputs["reflexion"]["checkUserSession"] | null
   >(null);
 
+  // Call on page load to get a new user session with reflexion
   useEffect(() => {
     getNewReflexionSession.mutateAsync().then((res) => {
       setUserSession(res);
     });
   }, []);
 
-  // poll the endpoint every 2 seconds until we get success
+  // poll the endpoint every 2 seconds until we get success for the current user session
   useEffect(() => {
     if (sessionResult !== null && sessionResult?.completed) return;
     const interval = setInterval(() => {
@@ -59,7 +61,6 @@ const Home: NextPage = () => {
     return () => clearInterval(interval);
   }, [reflexionUserSession]);
 
-  useDisablePinchZoomEffect();
   return (
     <>
       <Head>
