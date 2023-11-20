@@ -7,5 +7,5 @@ do within our booth experience.
 This repo was created using the t3 app for ease of the author (Overkill I know!), but the main code
 is in [index.ts](src/pages/index.tsx) and utilises tailwind for styling.
 
-The API Calls to reflexion are handled by using tRPC and the router of the calls
+The API Calls to Reflexion are handled by using tRPC and the router of the calls
 themselves can be found in [reflexion.ts](src/server//trpc/router/reflexion.ts)
