@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 
 import type { RouterOutputs } from "../utils/trpc";
 import { trpc } from "../utils/trpc";
