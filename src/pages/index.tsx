@@ -26,7 +26,6 @@ const useDisablePinchZoomEffect = () => {
 const Home: NextPage = () => {
   useDisablePinchZoomEffect();
   const [displayTop, setDisplayTop] = useState(true);
-  const utils = trpc.useContext();
 
   const getNewReflexionSession =
     trpc.reflexion.createNewRandomSession.useMutation();
@@ -35,31 +34,39 @@ const Home: NextPage = () => {
     RouterOutputs["reflexion"]["createNewRandomSession"] | null
   >(null);
 
-  const [sessionResult, setSessionResult] = useState<
-    RouterOutputs["reflexion"]["checkUserSession"] | null
-  >(null);
+  const [reflexionResultObtained, setReflexionResultObtained] =
+    useState<boolean>(false);
 
   // Call on page load to get a new user session with reflexion
   useEffect(() => {
     getNewReflexionSession.mutateAsync().then((res) => {
       setUserSession(res);
     });
+    // This is actually only needed to be reset here due to hot reload keeping
+    // react state alive... Refreshing the page for real clears the state, but
+    // if you are resetting / running a new test elsewhere, you will need to reset it there.
+    setReflexionResultObtained(false);
   }, []);
 
-  // poll the endpoint every 2 seconds until we get success for the current user session
-  useEffect(() => {
-    if (sessionResult !== null && sessionResult?.completed) return;
-    const interval = setInterval(() => {
-      utils.client.reflexion.checkUserSession
-        .query({
-          userSessionToken: reflexionUserSession?.userSessionToken || "",
-        })
-        .then((res) => {
-          setSessionResult(res);
-        });
-    }, 2000);
-    return () => clearInterval(interval);
-  }, [reflexionUserSession]);
+  // Check the user session to see if the test is complete
+  const sessionResultQuery = trpc.reflexion.checkUserSession.useQuery(
+    {
+      userSessionToken: reflexionUserSession?.userSessionToken || "",
+    },
+    {
+      // Every 2 seconds
+      refetchInterval: 2000,
+      // But only when the user session is available and the result has not been obtained
+      enabled:
+        !!reflexionUserSession?.userSessionToken && !reflexionResultObtained,
+      // record in state when we get a successful result.
+      onSuccess: (data) => {
+        if (data.completed) {
+          setReflexionResultObtained(true);
+        }
+      },
+    }
+  );
 
   return (
     <>
@@ -81,7 +88,7 @@ const Home: NextPage = () => {
             Cognitive Test
           </h1>
           <div className="flex min-w-full flex-grow flex-row items-start justify-center">
-            {sessionResult?.completed ? (
+            {sessionResultQuery.data?.completed ? (
               <div className="mt-[300px] flex w-[800px] flex-col rounded-3xl border-2 border-green-400 bg-white/10 p-8 text-center align-middle text-6xl text-white">
                 <p className="m-auto flex">✅</p>
                 <br />
@@ -127,7 +134,7 @@ const Home: NextPage = () => {
               <div className="flex text-5xl font-bold text-white">
                 Test Result:
               </div>
-              <pre>{JSON.stringify(sessionResult, null, 2)}</pre>
+              <pre>{JSON.stringify(sessionResultQuery.data, null, 2)}</pre>
             </div>
           </div>
           <div className="align-self-end mb-32">
