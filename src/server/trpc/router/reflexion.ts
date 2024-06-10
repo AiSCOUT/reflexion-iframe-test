@@ -41,6 +41,8 @@ export const reflexionRouter = router({
       to: DateTime.fromISO("2004-01-01").toJSDate(),
     });
 
+    console.log("Bearing Token:", env.REFLEXION_API_KEY);
+
     const userSessionResponse = await relfexionApi.post<UserSessionResponse>(
       "/org/usersession",
       {
