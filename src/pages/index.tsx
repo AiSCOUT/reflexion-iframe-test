@@ -71,10 +71,10 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Reflexion iFrame Test</title>
+        <title>Cognitive Touch Screen Test</title>
         <meta
           name="description"
-          content="A page to be able to test reflexion in an iFrame"
+          content="A page to be able to test cognitive on an touch screen"
         />
         {/* <meta
           httpEquiv="Content-Security-Policy"
