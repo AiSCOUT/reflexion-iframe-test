@@ -46,7 +46,7 @@ export const reflexionRouter = router({
       {
         userID: randomUser.id,
         birthDate: DateTime.fromJSDate(birthDate).toFormat("yyyy-MM-dd"),
-        assessmentType: "ai.io_aws",
+        assessmentType: "minefield",
         showVideos: false,
         showProgressPage: false,
         showSpiderGraph: false,
