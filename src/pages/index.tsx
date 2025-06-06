@@ -74,7 +74,7 @@ const Home: NextPage = () => {
         <title>Cognitive Touch Screen Test</title>
         <meta
           name="description"
-          content="A page to be able to test cognitive on an touch screen"
+          content="A page to be able to test cognitive on a touch screen"
         />
         {/* <meta
           httpEquiv="Content-Security-Policy"
