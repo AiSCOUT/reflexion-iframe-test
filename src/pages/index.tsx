@@ -71,10 +71,10 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Reflexion iFrame Test</title>
+        <title>Cognitive Touch Screen Test</title>
         <meta
           name="description"
-          content="A page to be able to test reflexion in an iFrame"
+          content="A page to be able to test cognitive on a touch screen"
         />
         {/* <meta
           httpEquiv="Content-Security-Policy"
@@ -123,7 +123,7 @@ const Home: NextPage = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-col gap-8">
+          {/* <div className="flex flex-col gap-8">
             <div className="flex flex-col text-3xl text-white">
               <div className="flex text-5xl font-bold text-white">
                 User Session:
@@ -136,7 +136,7 @@ const Home: NextPage = () => {
               </div>
               <pre>{JSON.stringify(sessionResultQuery.data, null, 2)}</pre>
             </div>
-          </div>
+          </div> */}
           <div className="align-self-end mb-32">
             <Image src="/logoP.png" alt="ai.io logo" width={324} height={140} />
           </div>
